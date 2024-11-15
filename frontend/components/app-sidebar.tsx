@@ -10,10 +10,12 @@ import {
   FileClock,
   BookDashed,
   FileQuestion,
+  LogOut,
   
 
   GalleryVerticalEnd,
-  PinIcon
+  PinIcon,
+  LogOutIcon
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -26,6 +28,7 @@ import {
   SidebarHeader,
   SidebarRail,
 } from "@/components/ui/sidebar"
+import { Button } from "./ui/button"
 
 const data = {
   user: {
@@ -99,7 +102,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        
+        <Button variant="outline"> 
+          <LogOutIcon/>
+          Logout
+        </Button>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
