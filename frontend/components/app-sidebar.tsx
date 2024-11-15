@@ -4,7 +4,13 @@ import * as React from "react"
 import {
   AudioWaveform,
   HomeIcon,
+  User,
   Command,
+  Lightbulb,
+  FileClock,
+  BookDashed,
+  FileQuestion,
+  
   Frame,
   GalleryVerticalEnd,
   Map,
@@ -30,8 +36,8 @@ import { title } from "process"
 // This is sample data.
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
+    name: "Abdullah Almansouri",
+    email: "abdullah@stuff.adec.ae",
     avatar: "/avatars/shadcn.jpg",
   },
   teams: [
@@ -51,41 +57,41 @@ const data = {
       plan: "Free",
     },
   ],
-  projects: [
+  navMain:[
     {
-      name: "Home",
+      title: "Home",
       url: "#",
       icon: HomeIcon,
     },
     {
-      name: "Profile",
+      title: "Profile",
       url: "#",
-      icon: PieChart,
+      icon: User,
     },
     {
-      name: "Questions",
+      title: "Questions",
       url: "#",
-      icon: Map,
+      icon: FileQuestion,
     },
     {
-      name: "Answers",
+      title: "Answers",
       url: "#",
-      icon: Map,
+      icon: Lightbulb,
     },
     {
-      name: "History",
+      title: "History",
       url: "#",
-      icon: Map,
+      icon: FileClock,
     },
     {
-      name: "Pinned",
+      title: "Pinned",
       url: "#",
       icon: PinIcon,
     },
     {
-      name: "Draft",
+      title: "Draft",
       url: "#",
-      icon: Map,
+      icon: BookDashed,
     },
   ],
 }
@@ -94,13 +100,13 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        <NavUser user={data.user} />
       </SidebarHeader>
       <SidebarContent>
-        <NavProjects projects={data.projects} />
+        <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={data.user} />
+        
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
