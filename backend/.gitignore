@@ -1,0 +1,32 @@
+# Byte-compiled files
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual environment
+venv/
+env/
+ENV/
+
+# Django-related
+db.sqlite3
+*.log
+
+# Static and media files
+/static/
+/media/
+
+# Local environment variables
+.env
+
+# IDE-specific files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# macOS-specific files
+.DS_Store
+
+# Node modules (if using JavaScript frameworks)
+node_modules/
