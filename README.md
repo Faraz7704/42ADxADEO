@@ -1,14 +1,8 @@
 # Installation
 ```
-git clone https://github.com/jya0/42ADxADEO
-cd .
-make up
-```
-
-## Uninstall
-```
-cd .
-make prune
+git clone https://github.com/jya0/42ADxADEO ask_project
+cd ask_project
+docker-compose up --build
 ```
 
 ## Documentation
