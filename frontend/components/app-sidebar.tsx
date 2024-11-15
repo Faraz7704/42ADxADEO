@@ -60,12 +60,12 @@ const data = {
   navMain:[
     {
       title: "Home",
-      url: "#",
+      url: "/home",
       icon: HomeIcon,
     },
     {
       title: "Profile",
-      url: "#",
+      url: "/home/profile",
       icon: User,
     },
     {
