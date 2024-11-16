@@ -6,17 +6,16 @@ import { Separator } from "@/components/ui/separator"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Bell } from "lucide-react"
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
-// Utility to capitalize the first letter of the current page name
 function formatPageTitle(pathname: string) {
-  const segments = pathname.split("/").filter(Boolean) // Split path and remove empty segments
+  const segments = pathname.split("/").filter(Boolean)
   if (segments.length > 1) {
     return segments[segments.length - 1]
-      .replace(/-/g, " ") // Replace hyphens with spaces
-      .replace(/^\w/, (c) => c.toUpperCase()) // Capitalize the first character
+      .replace(/-/g, " ")
+      .replace(/^\w/, (c) => c.toUpperCase())
   }
-  return "Home" // Default for root `/dashboard`
+  return "Home"
 }
 
 export default function DashboardLayout({
@@ -29,32 +28,34 @@ export default function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <AppSidebar />
-      <SidebarInset>
-        {/* Header */}
-        <header className="flex h-16 shrink-0 items-center gap-4 px-4 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
-          <SidebarTrigger className="-ml-1" />
-          <Separator orientation="vertical" className="h-4" />
-
-          {/* Page Title */}
-          <h1 className="text-lg font-semibold">{pageTitle}</h1>
-
-          <div className="ml-auto flex items-center gap-4">
-            {/* Search Bar */}
-            <Input type="text" placeholder="Search..." className="max-w-xs" />
-
-            {/* Notifications */}
-            <Button variant="ghost" className="relative">
-              <Bell className="w-5 h-5" />
-              {/* Notification Badge */}
-              <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-red-500" />
-            </Button>
-          </div>
-        </header>
+      <div className="flex w-full min-h-screen">
+        {/* Sidebar */}
+        <AppSidebar />
 
         {/* Main Content */}
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">{children}</div>
-      </SidebarInset>
+        <div className="flex-1 flex flex-col">
+          {/* Fixed Header */}
+          <header className="sticky top-0 z-50 flex h-16 items-center gap-4 px-4 bg-neutral-50 shadow-md w-full">
+            <SidebarTrigger className="-ml-1" />
+            <Separator orientation="vertical" className="h-4" />
+
+            <h1 className="text-lg font-semibold">{pageTitle}</h1>
+
+            <div className="ml-auto flex items-center gap-4">
+              <Input type="text" placeholder="Search..." className="max-w-xs" />
+              <Button variant="ghost" className="relative">
+                <Bell className="w-5 h-5" />
+                <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-500" />
+              </Button>
+            </div>
+          </header>
+
+          {/* Scrollable Content */}
+          <main className="flex-1 overflow-y-auto p-4">
+            {children}
+          </main>
+        </div>
+      </div>
     </SidebarProvider>
   )
 }

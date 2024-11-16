@@ -10,9 +10,6 @@ import {
   FileClock,
   BookDashed,
   FileQuestion,
-  LogOut,
-  
-
   GalleryVerticalEnd,
   PinIcon,
   LogOutIcon
@@ -66,27 +63,27 @@ const data = {
     },
     {
       title: "Questions",
-      url: "#",
+      url: "/home/questions",
       icon: FileQuestion,
     },
     {
       title: "Answers",
-      url: "#",
+      url: "/home/answers",
       icon: Lightbulb,
     },
     {
       title: "History",
-      url: "#",
+      url: "/home/history",
       icon: FileClock,
     },
     {
       title: "Pinned",
-      url: "#",
+      url: "/home/pinned",
       icon: PinIcon,
     },
     {
       title: "Draft",
-      url: "#",
+      url: "/home/draft",
       icon: BookDashed,
     },
   ],
