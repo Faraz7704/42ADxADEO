@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { StaticImageData } from "next/image";
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
@@ -22,9 +23,14 @@ type CardData = {
 };
 
 export default function HomePage() {
+  const router = useRouter();
+
+  const [searchQuery, setSearchQuery] = useState(""); // Local state for manual input
   const [cards, setCards] = useState<CardData[]>([]);
+  const [filteredCards, setFilteredCards] = useState<CardData[]>([]);
 
   useEffect(() => {
+    // Mock card data
     const data: CardData[] = [
       {
         id: 1,
@@ -128,23 +134,53 @@ export default function HomePage() {
       }, 
     ];
     setCards(data);
+    setFilteredCards(data); // Initialize with all cards
   }, []);
+
+  const handleSearch = () => {
+    if (searchQuery) {
+      const filtered = cards.filter((card) =>
+        card.question.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setFilteredCards(filtered);
+      // Optionally, update the query parameter in the URL
+      router.push(`/home?search=${encodeURIComponent(searchQuery)}`);
+    } else {
+      setFilteredCards(cards);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleSearch();
+    }
+  };
 
   return (
     <div className="flex flex-col items-center p-4 space-y-6">
       <Image src={Logo} height={100} alt="Unikamel" />
 
       <div className="relative w-full max-w-md">
-        <Input type="text" placeholder="Search..." className="pr-10" />
+        <Input
+          type="text"
+          placeholder="Search..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)} // Manual input
+          onKeyDown={handleKeyDown} // Trigger search on Enter
+          className="pr-10"
+        />
         <span className="absolute inset-y-0 right-3 flex items-center text-muted-foreground">
           <Search className="w-5 h-5" />
         </span>
       </div>
 
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 w-full">
-        {cards.map((card) => (
+        {filteredCards.map((card) => (
           <BlogCard key={card.id} {...card} />
         ))}
+        {filteredCards.length === 0 && (
+          <p className="col-span-full text-center text-gray-500">No results found</p>
+        )}
       </div>
     </div>
   );

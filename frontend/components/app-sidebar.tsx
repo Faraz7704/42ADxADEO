@@ -11,8 +11,8 @@ import {
   BookDashed,
   FileQuestion,
   GalleryVerticalEnd,
-  PinIcon,
-  LogOutIcon
+  BookmarkIcon,
+  LogOutIcon,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -62,8 +62,8 @@ const data = {
       icon: User,
     },
     {
-      title: "Questions",
-      url: "/home/questions",
+      title: "Requests",
+      url: "/home/requests",
       icon: FileQuestion,
     },
     {
@@ -77,9 +77,9 @@ const data = {
       icon: FileClock,
     },
     {
-      title: "Pinned",
-      url: "/home/pinned",
-      icon: PinIcon,
+      title: "Saved",
+      url: "/home/saved",
+      icon: BookmarkIcon,
     },
     {
       title: "Draft",
