@@ -1,10 +1,12 @@
 "use client";
-import UserQuestionsTable from "@/components/request-table";
+
+import AnswerTable from "@/components/answer-table";
+
 
 export default function ProfilePage() {
   return (
     <div>
-      <UserQuestionsTable />
+      <AnswerTable/>
     </div>
   );
 }

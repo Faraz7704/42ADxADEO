@@ -16,7 +16,7 @@ type CardData = {
   answer?: string;
   aiSummary?: string;
   departments: string[];
-  logo?: StaticImageData | string; // Allow both string and StaticImageData
+  logo?: StaticImageData | string;
   date: string;
   status: "not answered" | "approved" | "under discussion";
   upvotes: number;
@@ -26,7 +26,7 @@ type CardData = {
 export default function HomePage() {
   const router = useRouter();
 
-  const [searchQuery, setSearchQuery] = useState(""); // Local state for manual input
+  const [searchQuery, setSearchQuery] = useState("");
   const [cards, setCards] = useState<CardData[]>([]);
   const [filteredCards, setFilteredCards] = useState<CardData[]>([]);
 
@@ -173,7 +173,7 @@ export default function HomePage() {
       },
     ];
     setCards(data);
-    setFilteredCards(data); // Initialize with all cards
+    setFilteredCards(data);
   }, []);
 
   const handleSearch = () => {
@@ -182,7 +182,6 @@ export default function HomePage() {
         card.question.toLowerCase().includes(searchQuery.toLowerCase())
       );
       setFilteredCards(filtered);
-      // Optionally, update the query parameter in the URL
       router.push(`/home?search=${encodeURIComponent(searchQuery)}`);
     } else {
       setFilteredCards(cards);
@@ -204,8 +203,8 @@ export default function HomePage() {
           type="text"
           placeholder="Search..."
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)} // Manual input
-          onKeyDown={handleKeyDown} // Trigger search on Enter
+          onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={handleKeyDown}
           className="pr-10"
         />
         <span className="absolute inset-y-0 right-3 flex items-center text-muted-foreground">

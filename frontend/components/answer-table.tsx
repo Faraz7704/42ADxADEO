@@ -18,7 +18,7 @@ interface Question {
   id: number;
   status: Status;
   name: string;
-  question: string;
+  summary: string;
   date: string;
 }
 
@@ -34,47 +34,75 @@ const mockData: Question[] = [
     id: 1,
     status: "approved",
     name: "Abdullah Almansouri",
-    question: "What is the impact of AI on modern education?",
-    date: "2024-11-10",
+    summary: "How will AI impact education in the coming decade?",
+    date: "2024-11-18",
   },
   {
     id: 2,
-    status: "approved",
+    status: "under discussion",
     name: "Aisha Alharthi",
-    question: "How does climate change affect agricultural production?",
-    date: "2024-11-09",
+    summary: "What are the main environmental challenges facing agriculture?",
+    date: "2024-11-17",
   },
   {
     id: 3,
-    status: "not answered",
+    status: "approved",
     name: "Omar Alrasheed",
-    question: "What are the challenges of renewable energy adoption?",
-    date: "2024-11-08",
+    summary: "How can renewable energy be made more affordable?",
+    date: "2024-11-16",
   },
   {
     id: 4,
     status: "approved",
     name: "Fatima Alnuaimi",
-    question: "How can machine learning be used in healthcare?",
-    date: "2024-11-07",
+    summary: "What are the uses of machine learning in healthcare?",
+    date: "2024-11-15",
   },
   {
     id: 5,
-    status: "not answered",
+    status: "under discussion",
     name: "Yusuf Alhamadi",
-    question: "What are the benefits of meditation for mental health?",
-    date: "2024-11-06",
+    summary: "How does meditation contribute to mental health?",
+    date: "2024-11-14",
   },
   {
     id: 6,
-    status: "not answered",
+    status: "approved",
     name: "Layla Alshamsi",
-    question: "How does blockchain technology ensure data security?",
-    date: "2024-11-05",
+    summary: "How can blockchain enhance data security in the digital age?",
+    date: "2024-11-13",
+  },
+  {
+    id: 7,
+    status: "approved",
+    name: "Hassan Alshehhi",
+    summary: "What are the major economic benefits of adopting renewable energy?",
+    date: "2024-11-12",
+  },
+  {
+    id: 8,
+    status: "approved",
+    name: "Mariam Almazrouei",
+    summary: "How can we promote sustainable urban development?",
+    date: "2024-11-11",
+  },
+  {
+    id: 9,
+    status: "approved",
+    name: "Ahmed Alghafli",
+    summary: "What are the key features of quantum computing?",
+    date: "2024-11-10",
+  },
+  {
+    id: 10,
+    status: "approved",
+    name: "Zainab Alhaddad",
+    summary: "How can diet influence overall mental well-being?",
+    date: "2024-11-09",
   },
 ];
 
-export default function RequestTable() {
+export default function AnswerTable() {
   const [selectedRows, setSelectedRows] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
@@ -99,7 +127,7 @@ export default function RequestTable() {
             <TableHead className="w-[50px]">Select</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Question</TableHead>
+            <TableHead>Summarized Question</TableHead>
             <TableHead>Date</TableHead>
           </TableRow>
         </TableHeader>
@@ -120,7 +148,7 @@ export default function RequestTable() {
                 </Badge>
               </TableCell>
               <TableCell>{question.name}</TableCell>
-              <TableCell>{question.question}</TableCell>
+              <TableCell>{question.summary}</TableCell>
               <TableCell>{question.date}</TableCell>
             </TableRow>
           ))}

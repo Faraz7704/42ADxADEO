@@ -36,15 +36,14 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     setIsNotificationOpen((prev) => !prev);
   };
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        notificationRef.current && // Dropdown exists
-        !notificationRef.current.contains(event.target as Node) && // Click is not inside the dropdown
-        !buttonRef.current?.contains(event.target as Node) // Click is not on the button
+        notificationRef.current &&
+        !notificationRef.current.contains(event.target as Node) &&
+        !buttonRef.current?.contains(event.target as Node)
       ) {
-        setIsNotificationOpen(false); // Close dropdown
+        setIsNotificationOpen(false);
       }
     };
 
@@ -70,10 +69,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               <Input type="text" placeholder="Search..." className="max-w-xs" />
 
               <Button
-                ref={buttonRef} // Attach ref to the button
+                ref={buttonRef}
                 variant="ghost"
                 className="relative"
-                onClick={handleNotificationClick} // Toggle dropdown
+                onClick={handleNotificationClick}
               >
                 <Bell className="w-5 h-5" />
                 <span className="absolute top-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-500" />
@@ -81,7 +80,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
               {isNotificationOpen && (
                 <div
-                  ref={notificationRef} // Attach ref to dropdown
+                  ref={notificationRef}
                   className="absolute top-10 right-0 w-80 bg-white shadow-md rounded-md p-4 z-50"
                 >
                   <h3 className="text-sm font-semibold">Notifications</h3>

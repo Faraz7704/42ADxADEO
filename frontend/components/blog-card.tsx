@@ -30,7 +30,7 @@ export type BlogCardProps = {
   answer?: string;
   aiSummary?: string;
   departments: string[];
-  logo?: string | StaticImageData; // Update here to accept both string and StaticImageData
+  logo?: string | StaticImageData;
   date: string;
   status: "not answered" | "approved" | "under discussion";
   upvotes: number;
@@ -112,7 +112,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
           </CardDescription>
         </CardHeader>
 
-        {/* Card Content */}
         <CardContent className="flex-grow flex items-end justify-center">
           <div className="flex justify-center items-center w-full h-32 bg-white border border-gray-200 rounded-md p-4">
             <Image
@@ -124,7 +123,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
           </div>
         </CardContent>
 
-        {/* Card Footer */}
         <CardFooter className="flex justify-between items-center p-4 border-t rounded-b-md bg-white mt-auto">
           {/* Interaction Buttons */}
           <div className="flex items-center space-x-2">
@@ -140,7 +138,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
               <span>{comments}</span>
             </Button>
           </div>
-          {/* Save and Link Buttons */}
+
           <div className="flex items-center space-x-2">
             <Button variant="outline" size="icon">
               <BookmarkIcon className="h-5 w-5" />
@@ -154,7 +152,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
   <div className="relative">
         <div className="relative max-w-full sm:max-w-lg md:max-w-3xl min-h-[400px] sm:min-h-[500px] space-y-4 p-6 sm:p-8 bg-white rounded shadow-xl max-h-[90vh] overflow-y-auto">
-          {/* Close Button */}
+
           <button
             onClick={() => setIsModalOpen(false)}
             className="absolute top-4 right-4 p-2 text-gray-600 hover:text-gray-800 z-50"
@@ -163,12 +161,11 @@ const BlogCard: React.FC<BlogCardProps> = ({
             <XIcon className="h-6 w-6" />
           </button>
 
-          {/* Question Title */}
+
           <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900">
             {question}
           </h2>
 
-          {/* Departments List */}
           <div className="flex flex-wrap gap-3">
             {departments.map((dept, idx) => (
               <span
@@ -180,13 +177,13 @@ const BlogCard: React.FC<BlogCardProps> = ({
             ))}
           </div>
 
-          {/* Date */}
+
           <p className="text-xs sm:text-sm text-gray-500">{date}</p>
-            {/* Status */}
+
           <div className="text-xs sm:text-sm text-gray-500">
             Status: {status}
           </div>
-          {/* Logo/Image Section */}
+
           <div className="flex justify-center items-center w-full h-32 sm:h-40 bg-white border border-gray-200 rounded-md p-4 sm:p-6">
             <Image
               src={logo || "/placeholder.svg?height=100&width=100"}
@@ -196,9 +193,9 @@ const BlogCard: React.FC<BlogCardProps> = ({
             />
           </div>
 
-          {/* Card Footer */}
+
           <CardFooter className="flex justify-between items-center p-4  rounded-b-md bg-white mt-4">
-            {/* Interaction Buttons */}
+
             <div className="flex items-center space-x-4">
               <Button variant="outline">
                 <ArrowBigUpDash className="h-5 w-5 text-green-500" />
@@ -243,7 +240,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
               </div>
             </div>
 
-          {/* AI Summary Section */}
           <div className="mt-4 p-4 border border-gray-300 rounded-md bg-white">
             <h3 className="text-lg font-semibold text-gray-800">AI Summary:</h3>
             <p className="text-sm text-gray-700">
@@ -264,7 +260,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
             </p>
           </div>
 
-          {/* Share Your Thoughts Button */}
+
           <div className="mt-6">
             <Button
               variant="outline"
@@ -284,7 +280,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
             </Button>
           </div>
 
-          {/* Expanded Form */}
           {isExpanded && (
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
