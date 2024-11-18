@@ -59,7 +59,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <AppSidebar />
 
         <div className="flex-1 flex flex-col">
-          <header className="sticky top-0 z-50 flex h-16 items-center gap-4 px-4 bg-neutral-50 shadow-md w-full">
+          <header className="sticky top-0 z-50 flex h-16 items-center gap-4 px-4 bg-neutral-50 shadow w-full">
             <SidebarTrigger className="-ml-1" />
             <Separator orientation="vertical" className="h-4" />
 

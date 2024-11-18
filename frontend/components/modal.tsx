@@ -1,20 +1,12 @@
 import React, { useEffect, useRef } from "react";
-import { X } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  title?: string;
   children: React.ReactNode;
 }
 
-export default function Modal({
-  isOpen,
-  onClose,
-  title,
-  children,
-}: ModalProps) {
+export default function Modal({ isOpen, onClose, children }: ModalProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -60,9 +52,7 @@ export default function Modal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div>
-        <div>{children}</div>
-      </div>
+      <div ref={modalRef}>{children}</div>
     </div>
   );
 }

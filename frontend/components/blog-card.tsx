@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { StaticImageData } from "next/image";
 import Image from "next/image";
-import { XIcon } from "lucide-react";
+import { XIcon, Calendar } from "lucide-react";
 import avatar from "@/public/avatar.jpeg";
 import placeholder from "@/public/avatar_placeholder.png";
+import "./style.css";
+
 import {
   Card,
   CardContent,
@@ -126,21 +128,23 @@ const BlogCard: React.FC<BlogCardProps> = ({
         {/* Status Indicator */}
         <div
           className={cn(
-            "absolute top-2 right-2 w-3 h-3 rounded-full",
+            "absolute top-2 right-2 w-3 h-3 rounded-full modal-right-header",
             getStatusColor(status)
           )}
         ></div>
 
         {/* Card Header */}
-        <CardHeader className="space-y-4">
-          <CardTitle>{question || "No question provided"}</CardTitle>
-          <CardDescription>
-            <div className="flex flex-col space-y-2">
-              <div className="flex flex-wrap gap-1">
+        <CardHeader className="space-y-4 min-h-[190px] flex flex-col">
+          <CardTitle className="leading-5">
+            {question || "No question provided"}
+          </CardTitle>
+          <CardDescription className="flex flex-col h-[100%] mt-auto align-bottom justify-between">
+            <div className="flex flex-col align-middle justify-between space-y-2 h-[100%]">
+              <div className="flex flex-wrap gap-2 ">
                 {departments.map((dept, idx) => (
                   <div
                     key={idx}
-                    className="px-2 py-1 text-xs border border-gray-300 rounded-md bg-white shadow-sm"
+                    className="px-2 py-1 text-xs border border-gray-300 rounded-md bg-white shadow-sm inline h-auto"
                   >
                     {dept}
                   </div>
@@ -153,22 +157,21 @@ const BlogCard: React.FC<BlogCardProps> = ({
 
         <CardContent className="flex-grow flex  justify-center">
           <div className=" p-4 border border-gray-300 rounded-md w-full bg-white">
-                <h3 className="text-md font-semibold text-gray-800">
-                  Description:
-                </h3>
-                <p className="text-sm text-gray-700">
-                  {aiSummary && aiSummary.length > 100 ? (
-                    <>
-                      {isSummaryExpanded
-                        ? aiSummary
-                        : `${aiSummary.substring(0, 150)}...`}
-                    </>
-                  ) : (
-                    aiSummary || "No Description available."
-                  )}
-                </p>
-              </div>
-            
+            <h3 className="text-md font-semibold text-gray-800">
+              Description:
+            </h3>
+            <p className="text-sm text-gray-700">
+              {aiSummary && aiSummary.length > 100 ? (
+                <>
+                  {isSummaryExpanded
+                    ? aiSummary
+                    : `${aiSummary.substring(0, 150)}...`}
+                </>
+              ) : (
+                aiSummary || "No Description available."
+              )}
+            </p>
+          </div>
         </CardContent>
 
         <CardFooter className="flex justify-between items-center p-4 border-t rounded-b-md bg-white mt-auto">
@@ -197,18 +200,18 @@ const BlogCard: React.FC<BlogCardProps> = ({
         </CardFooter>
       </Card>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-        <div className="relative">
-          <div className="flex max-w-full sm:max-w-lg md:max-w-5xl min-h-[400px] sm:min-h-[500px] p-6 sm:p-8 bg-white rounded shadow-xl justify-center relative">
-            <div className="w-[60%] me-8 max-h-[70vh] space-y-4  overflow-y-auto">
+        {/* <div className="relative"> */}
+          <div className="flex max-w-full sm:max-w-lg md:max-w-5xl min-h-[400px] sm:min-h-[500px] bg-white rounded-sm shadow-xl justify-center border-gray-300 border-[3px] relative">
+            <div className="scrollbar-container w-[60%] me-5 p-4  max-h-[70vh] space-y-4  overflow-y-auto">
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="absolute top-3 right-3 p-2 text-gray-600 hover:text-gray-800 z-50"
+                className="absolute top-2 right-2 p-2 text-gray-600 hover:text-gray-800 z-50"
                 aria-label="Close"
               >
                 <XIcon className="h-6 w-6" />
               </button>
 
-              <h2 className="text-2xl sm:text-3xl font-semibold text-gray-900">
+              <h2 className="modal-title text-1xl sm:text-2xl font-bold leading-4 text-gray-900">
                 {question}
               </h2>
 
@@ -223,26 +226,31 @@ const BlogCard: React.FC<BlogCardProps> = ({
                 ))}
               </div>
 
-              <p className="text-xs sm:text-sm text-gray-500">{date}</p>
+              <div className="flex align-middle">
+                <Calendar className="w-5 h-5 me-1 text-blue-500" />
+                <p className="text-xs sm:text-sm text-blue-500 m-0 font-bold leading-0">
+                  {date}
+                </p>
+              </div>
 
-              <div className="text-xs sm:text-sm text-gray-500">
-                Status: {status}
+              <div className="text-xs sm:text-sm text-green-500 font-bold">
+                Status: <span className="font-medium uppercase">{status}</span>
               </div>
 
               <div className=" p-4 border border-gray-300 rounded-md w-full bg-white">
-                <h3 className="text-md font-semibold text-gray-800">
+                <h3 className="text-md font-semibold mb-1 text-gray-800">
                   Description:
                 </h3>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-gray-700 flex flex-col items-start">
                   {aiSummary && aiSummary.length > 100 ? (
                     <>
                       {isSummaryExpanded
                         ? aiSummary
-                        : `${aiSummary.substring(0, 150)}...`}
-                        <Button
+                        : `${aiSummary.substring(0, 160)}...`}
+                      <Button
                         onClick={handleSummaryExpandClick}
                         variant="outline"
-                        className=" m-2"
+                        className="my-2 text-xs p-3"
                       >
                         {isSummaryExpanded ? "Show less" : "Show more"}
                       </Button>
@@ -254,10 +262,10 @@ const BlogCard: React.FC<BlogCardProps> = ({
               </div>
 
               <div className="mt-4 p-4 border rounded-md border-gray-300 bg-white">
-                <h4 className="text-md font-semibold text-gray-800">
+                <h4 className="text-md font-semibold mb-1 text-gray-800">
                   Attached Documents:
                 </h4>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 justify-between">
                   {files.length > 0 ? (
                     files.map((file, idx) => (
                       <span
@@ -300,12 +308,12 @@ const BlogCard: React.FC<BlogCardProps> = ({
                   </Button>
                 </div>
               </CardFooter>
-                  <div className="border-t my-4"></div>
+              <div className="border-t my-4"></div>
               <div className="mt-4 p-4 border border-gray-300 rounded-md bg-white">
-                <h3 className="text-md font-semibold text-gray-800">
+                <h3 className="text-md font-semibold mb-1 text-gray-800">
                   AI Summary:
                 </h3>
-                <p className="text-sm text-gray-700">
+                <p className="text-sm text-gray-700 flex flex-col items-start">
                   {aiSummary && aiSummary.length > 200 ? (
                     <>
                       {isSummaryExpanded
@@ -314,7 +322,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
                       <Button
                         onClick={handleSummaryExpandClick}
                         variant="outline"
-                        className=" m-2"
+                        className="my-2 text-xs p-3"
                       >
                         {isSummaryExpanded ? "Show less" : "Show more"}
                       </Button>
@@ -325,10 +333,10 @@ const BlogCard: React.FC<BlogCardProps> = ({
                 </p>
               </div>
               <div className="mt-4 p-4 border rounded-md border-gray-300 bg-white">
-                <h4 className="text-md font-semibold text-gray-800">
+                <h4 className="text-md font-semibold mb-1 text-gray-800">
                   Relevant Documents:
                 </h4>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 justify-between">
                   {files.length > 0 ? (
                     files.map((file, idx) => (
                       <span
@@ -348,10 +356,9 @@ const BlogCard: React.FC<BlogCardProps> = ({
                 </div>
               </div>
             </div>
-            
 
             {/* Comment Section */}
-            <div className="w-[40%] max-h-[70vh] p-4 border-l overflow-y-auto">
+            <div className="scrollbar-container w-[40%] max-h-[70vh] p-4 py-16 border-l overflow-y-auto">
               <div className="">
                 <Button
                   variant="outline"
@@ -366,7 +373,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
                       height={40}
                       className="rounded-full"
                     />
-                    <span>Share your thoughts</span>
+                    <span className="text-gray-500">Share your thoughts</span>
                   </div>
                 </Button>
               </div>
@@ -431,8 +438,10 @@ const BlogCard: React.FC<BlogCardProps> = ({
                       className="rounded-full w-[40px] h-[40px] object-cover"
                     />
                     <div>
-                      <div className="flex items-center space-x-2">
-                        <span className="font-bold">{comment.name}</span>
+                      <div className="flex items-center justify-between space-x-2">
+                        <span className="font-bold text-blue-400">
+                          {comment.name}
+                        </span>
                         <span className="text-xs text-gray-500">
                           {comment.date}
                         </span>
@@ -449,7 +458,12 @@ const BlogCard: React.FC<BlogCardProps> = ({
               </div>
             </div>
           </div>
-        </div>
+          {/* <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+      <div>
+        <div>{children}</div>
+      </div>
+    </div> */}
+        {/* </div> */}
       </Modal>
     </>
   );
