@@ -38,7 +38,6 @@ export type BlogCardProps = {
 };
 const BlogCard: React.FC<BlogCardProps> = ({
   question,
-  answer,
   aiSummary,
   departments = [],
   logo,

@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import avatar from "@/public/avatar.jpeg";
 import {
   Card,
   CardContent,
@@ -47,7 +48,7 @@ export default function ProfilePage() {
           <CardHeader>
             <div className="flex flex-col items-center">
               <Avatar className="w-24 h-24 mb-4">
-                <AvatarImage src="/path-to-image.jpg" alt="User Avatar" />
+                <AvatarImage src={avatar.src} alt="User Avatar" />
                 <AvatarFallback>AA</AvatarFallback>
               </Avatar>
               <CardTitle className="text-center text-lg font-semibold">

@@ -17,6 +17,7 @@ import {
 
 import { NavMain } from "@/components/nav-main"
 import { NavUser } from "@/components/nav-user"
+import avatar from "@/public/avatar.jpeg"
 
 import {
   Sidebar,
@@ -31,7 +32,7 @@ const data = {
   user: {
     name: "Abdullah Almansouri",
     email: "abdullah@stuff.adec.ae",
-    avatar: "/avatars/shadcn.jpg",
+    avatar: avatar.src,
   },
   teams: [
     {
