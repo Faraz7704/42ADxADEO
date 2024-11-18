@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#repo path
+# repoPath=$(find $HOME -type d -name baseOS 2>/dev/null)
+
+NAME="ai-db"
+
+docker build . -t ${NAME}
+
+docker volume create ai-db-data
+echo "docker run -d -p 5432:5432 --name ${NAME}-c --rm -v "ai-db-data:/var/lib/postgresql/data" ${NAME}" > start
+chmod 777 start

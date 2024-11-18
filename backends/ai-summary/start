@@ -1,0 +1,1 @@
+docker run -it --gpus all --name ai-summary-c --rm -v /home/jinxi/42ADxADEO/backends/ai-summary:/home/vscode/src ai-summary /bin/zsh

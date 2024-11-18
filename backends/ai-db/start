@@ -1,0 +1,1 @@
+docker run -d -p 5432:5432 --name ai-db-c --rm -v ai-db-data:/var/lib/postgresql/data ai-db
