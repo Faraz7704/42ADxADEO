@@ -190,6 +190,13 @@ RUN apt update && apt install libgl1 -y
 
 RUN apt update && apt install nvidia-cudnn -y
 
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && \
+    sudo dpkg -i cuda-keyring_1.1-1_all.deb
+
+RUN sudo apt-get update && sudo apt-get -y install cuda-toolkit
+
+RUN sudo apt-get -y install cudnn9-cuda-11
+
 RUN apt update && apt install poppler-utils -y
 
 RUN pip install --upgrade pip
