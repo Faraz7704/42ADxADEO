@@ -14,7 +14,7 @@ type CardData = {
   question: string;
   answer?: string;
   departments: string[];
-  logo?: StaticImageData | string;
+  logo?: StaticImageData | string; // Allow both string and StaticImageData
   date: string;
   status: "not answered" | "approved" | "under discussion";
   upvotes: number;
@@ -28,8 +28,12 @@ export default function HomePage() {
     const data: CardData[] = [
       {
         id: 1,
-        question: "What are the renewable energy plans for residential buildings?",
-        departments: ["Department of Energy", "Department of Municipalities and Transport"],
+        question:
+          "What are the renewable energy plans for residential buildings?",
+        departments: [
+          "Department of Energy",
+          "Department of Municipalities and Transport",
+        ],
         logo: departmentLogos["Department of Energy"],
         date: "2024-11-15",
         status: "approved",
@@ -38,7 +42,8 @@ export default function HomePage() {
       },
       {
         id: 2,
-        question: "What is the process to obtain a medical license as a doctor?",
+        question:
+          "What is the process to obtain a medical license as a doctor?",
         departments: ["Department of Health"],
         logo: departmentLogos["Department of Health"],
         date: "2024-11-14",
@@ -58,8 +63,12 @@ export default function HomePage() {
       },
       {
         id: 4,
-        question: "What support programs are available for families with disabled members?",
-        departments: ["Department of Community Development", "Department of Health"],
+        question:
+          "What support programs are available for families with disabled members?",
+        departments: [
+          "Department of Community Development",
+          "Department of Health",
+        ],
         logo: departmentLogos["Department of Community Development"],
         date: "2024-11-12",
         status: "not answered",
@@ -78,8 +87,12 @@ export default function HomePage() {
       },
       {
         id: 6,
-        question: "What legal documents are needed to start a business in Abu Dhabi?",
-        departments: ["Abu Dhabi Judicial Department", "Department of Economic Development"],
+        question:
+          "What legal documents are needed to start a business in Abu Dhabi?",
+        departments: [
+          "Abu Dhabi Judicial Department",
+          "Department of Economic Development",
+        ],
         logo: departmentLogos["Abu Dhabi Judicial Department"],
         date: "2024-11-10",
         status: "under discussion",
@@ -98,7 +111,8 @@ export default function HomePage() {
       },
       {
         id: 8,
-        question: "Which transportation services are available to connect Abu Dhabi suburbs?",
+        question:
+          "Which transportation services are available to connect Abu Dhabi suburbs?",
         departments: ["Department of Municipalities and Transport"],
         logo: departmentLogos["Department of Municipalities and Transport"],
         date: "2024-11-08",
@@ -108,8 +122,12 @@ export default function HomePage() {
       },
       {
         id: 9,
-        question: "Are there any grants for schools to implement AI in education?",
-        departments: ["Department of Education and Knowledge", "Department of Economic Development"],
+        question:
+          "Are there any grants for schools to implement AI in education?",
+        departments: [
+          "Department of Education and Knowledge",
+          "Department of Economic Development",
+        ],
         logo: departmentLogos["Department of Education and Knowledge"],
         date: "2024-11-07",
         status: "not answered",
@@ -118,14 +136,18 @@ export default function HomePage() {
       },
       {
         id: 10,
-        question: "What green initiatives are being implemented in government offices?",
-        departments: ["Department of Government Enablement", "Department of Energy"],
+        question:
+          "What green initiatives are being implemented in government offices?",
+        departments: [
+          "Department of Government Enablement",
+          "Department of Energy",
+        ],
         logo: departmentLogos["Department of Government Enablement"],
         date: "2024-11-06",
         status: "under discussion",
         upvotes: 7,
         comments: 3,
-      }, 
+      },
     ];
     setCards(data);
   }, []);
