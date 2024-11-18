@@ -20,11 +20,15 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Modal from "./modal";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 export type BlogCardProps = {
   id: number;
   question: string;
   answer?: string;
+  aiSummary?: string;
   departments: string[];
   logo?: string | StaticImageData; // Update here to accept both string and StaticImageData
   date: string;
@@ -35,6 +39,7 @@ export type BlogCardProps = {
 const BlogCard: React.FC<BlogCardProps> = ({
   question,
   answer,
+  aiSummary,
   departments = [],
   logo,
   date,
@@ -43,6 +48,11 @@ const BlogCard: React.FC<BlogCardProps> = ({
   comments,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [isSummaryExpanded, setIsSummaryExpanded] = useState(false);
+  const [personalExpertise, setPersonalExpertise] = useState("");
+  const [history, setHistory] = useState("");
+  const [files, setFiles] = useState<File[]>([]);
 
   const getStatusColor = (status: string) => {
     if (status === "approved") return "bg-green-500";
@@ -53,6 +63,20 @@ const BlogCard: React.FC<BlogCardProps> = ({
 
   const handleCardClick = () => {
     setIsModalOpen(true);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setFiles(Array.from(e.target.files));
+    }
+  };
+
+  const handleExpandClick = () => {
+    setIsExpanded(!isExpanded);
+  };
+
+  const handleSummaryExpandClick = () => {
+    setIsSummaryExpanded(!isSummaryExpanded);
   };
 
   return (
@@ -95,7 +119,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
             <Image
               src={logo || "/placeholder.svg?height=80&width=80"}
               alt={departments.join(", ") || "Department logo"}
-              width={80}
               height={80}
               style={{ objectFit: "contain" }}
             />
@@ -130,11 +153,12 @@ const BlogCard: React.FC<BlogCardProps> = ({
         </CardFooter>
       </Card>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+  <div className="relative">
         <div className="relative max-w-full sm:max-w-lg md:max-w-3xl min-h-[400px] sm:min-h-[500px] space-y-6 p-6 sm:p-8 bg-white rounded shadow-xl max-h-[90vh] overflow-y-auto">
           {/* Close Button */}
           <button
             onClick={() => setIsModalOpen(false)}
-            className="absolute top-4 right-4 p-2 text-gray-600 hover:text-gray-800"
+            className="absolute top-4 right-4 p-2 text-gray-600 hover:text-gray-800 z-50"
             aria-label="Close"
           >
             <XIcon className="h-6 w-6" />
@@ -165,24 +189,14 @@ const BlogCard: React.FC<BlogCardProps> = ({
             <Image
               src={logo || "/placeholder.svg?height=100&width=100"}
               alt={departments.join(", ") || "Department logo"}
-              width={100}
               height={100}
               style={{ objectFit: "contain" }}
             />
           </div>
 
-          {/* Answer Section */}
-          <p className="text-sm sm:text-lg text-gray-700">
-            {answer || "No answer provided yet."}
-          </p>
-
-          {/* Status */}
-          <div className="text-xs sm:text-sm text-gray-500">
-            Status: {status}
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex justify-between items-center flex-wrap gap-4">
+          {/* Card Footer */}
+          <CardFooter className="flex justify-between items-center p-4 border-t rounded-b-md bg-white mt-4">
+            {/* Interaction Buttons */}
             <div className="flex items-center space-x-4">
               <Button variant="outline">
                 <ArrowBigUpDash className="h-5 w-5 text-green-500" />
@@ -204,28 +218,92 @@ const BlogCard: React.FC<BlogCardProps> = ({
                 <Link2Icon className="h-5 w-5" />
               </Button>
             </div>
-          </div>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus
-            aliquid temporibus obcaecati. Eaque libero tempore quas, nobis natus
-            dolore vel, a quisquam dolores sit quam quis aliquam doloribus quo
-            quasi explicabo. Quis veniam repudiandae unde aliquid excepturi.
-            Inventore animi laborum nesciunt repellendus molestias placeat Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Itaque unde ipsum
-            minus maiores praesentium, impedit veniam in voluptates illum
-            officia quod ex aliquam architecto quos magnam accusamus, dolore
-            quaerat dignissimos temporibus delectus? Amet sunt pariatur,
-            mollitia illum vel sed autem laboriosam eveniet vitae porro et
-            error! Fugit modi iusto quia aspernatur nam laborum? Magnam mollitia
-            facere rerum, totam ad itaque id alias cumque facilis, architecto
-            porro non voluptate optio eius nobis debitis pariatur explicabo
-            recusandae dignissimos! Adipisci sunt asperiores doloribus
-            similique, quibusdam obcaecati iste nulla natus vitae hic voluptatem
-            et saepe voluptatum tempore, quis, illo est explicabo. Ut, sunt
-            dolore. quasi.
+          </CardFooter>
+
+          {/* Answer Section */}
+          <p className="text-sm sm:text-lg text-gray-700">
+            {answer || "No answer provided yet."}
           </p>
+
+          {/* Status */}
+          <div className="text-xs sm:text-sm text-gray-500">
+            Status: {status}
+          </div>
+
+          {/* AI Summary Section */}
+          <div className="mt-4 p-4 border border-gray-300 rounded-md bg-gray-50">
+            <h3 className="text-lg font-semibold text-gray-800">AI Summary:</h3>
+            <p className="text-sm text-gray-700">
+              {aiSummary && aiSummary.length > 200 ? (
+                <>
+                  {isSummaryExpanded ? aiSummary : `${aiSummary.substring(0, 200)}...`}
+                  <button
+                    onClick={handleSummaryExpandClick}
+                    className="text-blue-500 ml-2"
+                  >
+                    {isSummaryExpanded ? "Show less" : "Show more"}
+                  </button>
+                </>
+              ) : (
+                aiSummary || "No AI summary available."
+              )}
+            </p>
+          </div>
+
+          {/* Share Your Thoughts Button */}
+          <div className="mt-6">
+            <Button
+              variant="outline"
+              onClick={handleExpandClick}
+              className="flex items-center w-full justify-between p-4"
+            >
+              <div className="flex items-center space-x-3">
+                <Image
+                  src={logo || "/placeholder.svg?height=40&width=40"}
+                  alt="User Avatar"
+                  width={40}
+                  height={40}
+                  className="rounded-full"
+                />
+                <span>Share your thoughts</span>
+              </div>
+            </Button>
+          </div>
+
+          {/* Expanded Form */}
+          {isExpanded && (
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <Label htmlFor="personalExpertise">Personal Expertise Opinion</Label>
+                <Textarea
+                  id="personalExpertise"
+                  value={personalExpertise}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setPersonalExpertise(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="history">History</Label>
+                <Textarea
+                  id="history"
+                  value={history}
+                  onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => setHistory(e.target.value)}
+                />
+              </div>
+              <div className="grid gap-2">
+                <Label htmlFor="file">Upload Files</Label>
+                <Input id="file" type="file" multiple onChange={handleFileChange} />
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setIsExpanded(false)}>
+                  Cancel
+                </Button>
+                <Button onClick={() => console.log("Submitted files:", files)}>Submit</Button>
+              </div>
+            </div>
+          )}
         </div>
-      </Modal>
+      </div>
+</Modal>
     </>
   );
 };

@@ -14,6 +14,7 @@ type CardData = {
   id: number;
   question: string;
   answer?: string;
+  aiSummary?: string;
   departments: string[];
   logo?: StaticImageData | string; // Allow both string and StaticImageData
   date: string;
@@ -45,6 +46,8 @@ export default function HomePage() {
         status: "approved",
         upvotes: 12,
         comments: 5,
+        aiSummary:
+          "The Department of Energy, in collaboration with the Department of Municipalities and Transport, has implemented several renewable energy initiatives for residential buildings, focusing on solar panel installations and energy efficiency upgrades. The Department of Energy, in collaboration with the Department of Municipalities and Transport, has implemented several renewable energy initiatives for residential buildings, focusing on solar panel installations and energy efficiency upgrades. The Department of Energy, in collaboration with the Department of Municipalities and Transport, has implemented several renewable energy initiatives for residential buildings, focusing on solar panel installations and energy efficiency upgrades. The Department of Energy, in collaboration with the Department of Municipalities and Transport, has implemented several renewable energy initiatives for residential buildings, focusing on solar panel installations and energy efficiency upgrades.",
       },
       {
         id: 2,
@@ -56,6 +59,8 @@ export default function HomePage() {
         status: "under discussion",
         upvotes: 8,
         comments: 3,
+        aiSummary:
+          "The process to obtain a medical license involves applying through the Department of Health, completing required exams, and undergoing a background check.",
       },
       {
         id: 3,
@@ -66,6 +71,8 @@ export default function HomePage() {
         status: "approved",
         upvotes: 15,
         comments: 7,
+        aiSummary:
+          "Several heritage festivals are scheduled, celebrating traditional Emirati culture, including the Date Festival and Camel Racing events.",
       },
       {
         id: 4,
@@ -90,6 +97,8 @@ export default function HomePage() {
         status: "approved",
         upvotes: 20,
         comments: 10,
+        aiSummary:
+          "Fire hazards can be reported to the Abu Dhabi Civil Defence Authority via their hotline or through their online portal.",
       },
       {
         id: 6,
@@ -104,6 +113,8 @@ export default function HomePage() {
         status: "under discussion",
         upvotes: 5,
         comments: 2,
+        aiSummary:
+          "Starting a business requires obtaining a trade license, registering with the Department of Economic Development, and submitting proof of identity and business plans.",
       },
       {
         id: 7,
@@ -114,6 +125,8 @@ export default function HomePage() {
         status: "approved",
         upvotes: 18,
         comments: 6,
+        aiSummary:
+          "To register a new commercial license, applicants must submit their business plan, identification, and complete registration with the Department of Economic Development.",
       },
       {
         id: 8,
@@ -125,6 +138,8 @@ export default function HomePage() {
         status: "approved",
         upvotes: 14,
         comments: 8,
+        aiSummary:
+          "The Department of Municipalities and Transport provides bus and taxi services that connect Abu Dhabi suburbs, with plans for future metro expansion.",
       },
       {
         id: 9,
@@ -153,6 +168,8 @@ export default function HomePage() {
         status: "under discussion",
         upvotes: 7,
         comments: 3,
+        aiSummary:
+          "Government offices are implementing green initiatives like reducing paper usage, increasing energy efficiency, and installing solar panels.",
       },
     ];
     setCards(data);
