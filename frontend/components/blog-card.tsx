@@ -154,7 +154,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
       </Card>
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
   <div className="relative">
-        <div className="relative max-w-full sm:max-w-lg md:max-w-3xl min-h-[400px] sm:min-h-[500px] space-y-6 p-6 sm:p-8 bg-white rounded shadow-xl max-h-[90vh] overflow-y-auto">
+        <div className="relative max-w-full sm:max-w-lg md:max-w-3xl min-h-[400px] sm:min-h-[500px] space-y-4 p-6 sm:p-8 bg-white rounded shadow-xl max-h-[90vh] overflow-y-auto">
           {/* Close Button */}
           <button
             onClick={() => setIsModalOpen(false)}
@@ -183,7 +183,10 @@ const BlogCard: React.FC<BlogCardProps> = ({
 
           {/* Date */}
           <p className="text-xs sm:text-sm text-gray-500">{date}</p>
-
+            {/* Status */}
+          <div className="text-xs sm:text-sm text-gray-500">
+            Status: {status}
+          </div>
           {/* Logo/Image Section */}
           <div className="flex justify-center items-center w-full h-32 sm:h-40 bg-white border border-gray-200 rounded-md p-4 sm:p-6">
             <Image
@@ -195,7 +198,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
           </div>
 
           {/* Card Footer */}
-          <CardFooter className="flex justify-between items-center p-4 border-t rounded-b-md bg-white mt-4">
+          <CardFooter className="flex justify-between items-center p-4  rounded-b-md bg-white mt-4">
             {/* Interaction Buttons */}
             <div className="flex items-center space-x-4">
               <Button variant="outline">
@@ -219,30 +222,42 @@ const BlogCard: React.FC<BlogCardProps> = ({
               </Button>
             </div>
           </CardFooter>
-
-          {/* Answer Section */}
-          <p className="text-sm sm:text-lg text-gray-700">
-            {answer || "No answer provided yet."}
-          </p>
-
-          {/* Status */}
-          <div className="text-xs sm:text-sm text-gray-500">
-            Status: {status}
-          </div>
+          <div className="mt-4 p-4 border rounded-md border-gray-300 bg-white">
+              <h4 className="text-sm font-medium text-gray-800 mb-2">Attached Documents:</h4>
+              <div className="flex flex-wrap gap-2">
+                {files.length > 0 ? (
+                  files.map((file, idx) => (
+                    <span
+                      key={idx}
+                      className="px-3 py-1 text-xs font-medium bg-white rounded-full shadow-sm"
+                    >
+                      {file.name}
+                    </span>
+                  ))
+                ) : (
+                  <>
+                    <Button variant="outline">Example_File_1.pdf</Button>
+                    <Button variant="outline">Example_File_2.docx</Button>
+                    <Button variant="outline">Example_Image.png</Button>
+                  </>
+                )}
+              </div>
+            </div>
 
           {/* AI Summary Section */}
-          <div className="mt-4 p-4 border border-gray-300 rounded-md bg-gray-50">
+          <div className="mt-4 p-4 border border-gray-300 rounded-md bg-white">
             <h3 className="text-lg font-semibold text-gray-800">AI Summary:</h3>
             <p className="text-sm text-gray-700">
               {aiSummary && aiSummary.length > 200 ? (
                 <>
                   {isSummaryExpanded ? aiSummary : `${aiSummary.substring(0, 200)}...`}
-                  <button
+                  <Button
                     onClick={handleSummaryExpandClick}
-                    className="text-blue-500 ml-2"
+                    variant="outline"
+                    className=" m-2"
                   >
                     {isSummaryExpanded ? "Show less" : "Show more"}
-                  </button>
+                    </Button>
                 </>
               ) : (
                 aiSummary || "No AI summary available."
