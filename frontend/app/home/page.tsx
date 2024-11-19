@@ -4,11 +4,12 @@ import { useRouter } from "next/navigation";
 import { StaticImageData } from "next/image";
 import React, { useState, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { Search } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import Image from "next/image";
 import Logo from "@/public/Logo_black.png";
 import BlogCard from "@/components/blog-card";
 import { departmentLogos } from "@/utils/departmentLogos";
+import "./page.css";
 
 type CardData = {
   id: number;
@@ -198,17 +199,17 @@ export default function HomePage() {
     <div className="flex flex-col items-center p-4 space-y-6">
       <Image src={Logo} height={100} alt="Unikamel" />
 
-      <div className="relative w-full max-w-md">
+      <div className="relative w-full max-w-md input-div">
         <Input
           type="text"
           placeholder="Search..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onKeyDown={handleKeyDown}
-          className="pr-10"
+          className="input-bordered pr-10"
         />
         <span className="absolute inset-y-0 right-3 flex items-center text-muted-foreground">
-          <Search className="w-5 h-5" />
+          <Sparkles className="spark-icon w-5 h-5" />
         </span>
       </div>
 
@@ -217,7 +218,9 @@ export default function HomePage() {
           <BlogCard key={card.id} {...card} />
         ))}
         {filteredCards.length === 0 && (
-          <p className="col-span-full text-center text-gray-500">No results found</p>
+          <p className="col-span-full text-center text-gray-500">
+            No results found
+          </p>
         )}
       </div>
     </div>
