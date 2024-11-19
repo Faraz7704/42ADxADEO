@@ -182,12 +182,6 @@ RUN set -eux; \
 		ln -svT "$src" "/usr/local/bin/$dst"; \
 	done
 
-RUN pip install --upgrade pip
-
-COPY requirements.txt /tmp
-
-RUN pip install -r /tmp/requirements.txt
-
 RUN apt update && apt install tesseract-ocr -y
 
 RUN apt update && apt install sudo -y
@@ -196,9 +190,29 @@ RUN apt update && apt install libgl1 -y
 
 RUN apt update && apt install nvidia-cudnn -y
 
+RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && \
+    sudo dpkg -i cuda-keyring_1.1-1_all.deb
+
+RUN sudo apt-get update && sudo apt-get -y install cuda-toolkit
+
+RUN sudo apt-get -y install cudnn9-cuda-11
+
+RUN apt update && apt install poppler-utils -y
+
+RUN pip install --upgrade pip
+
+COPY requirements.txt /tmp
+
+RUN pip install -r /tmp/requirements.txt
+
 COPY huggingfaceAuth.sh /tmp
 
 RUN sh /tmp/huggingfaceAuth.sh
+
+COPY . /home/vscode/src
+
+# CMD ["tail", "-f"]
+CMD ["python", "documentParse_flask.py"]
 
 # Install oh-my-zsh and update user prompt
 RUN sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" && echo 'PROMPT=%B%F{blue}[DOCKER]%f%b$PROMPT' >> /root/.zshrc
@@ -211,3 +225,5 @@ ENV PROMPT_COMMAND='RET=$?; echo -n "[$RET] "'
 
 LABEL maintainer="Jinxiu Yao <jya0>" \
       version="1.0.0"
+
+EXPOSE 5000

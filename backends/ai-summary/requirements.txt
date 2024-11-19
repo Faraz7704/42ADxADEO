@@ -4,7 +4,6 @@ albumentations==1.4.10
 annotated-types==0.7.0
 anyio==4.6.2.post1
 astor==0.8.1
-av==13.1.0
 beautifulsoup4==4.12.3
 blinker==1.9.0
 certifi==2024.8.30
@@ -71,7 +70,6 @@ paddleocr==2.9.1
 paddlepaddle-gpu==2.6.2
 pandas==2.2.3
 pathlib==1.0.1
-pdf2image==1.17.0
 pillow==11.0.0
 protobuf==5.28.3
 prov==2.0.1
@@ -89,7 +87,6 @@ python-docx==1.1.2
 pytz==2024.2
 pyxnat==1.6.2
 PyYAML==6.0.2
-qwen-vl-utils==0.0.8
 RapidFuzz==3.10.1
 rdflib==6.3.2
 regex==2024.11.6
@@ -98,6 +95,7 @@ safetensors==0.4.5
 scikit-image==0.24.0
 scikit-learn==1.5.2
 scipy==1.14.1
+sentencepiece==0.2.0
 shapely==2.0.6
 simplejson==3.19.3
 six==1.16.0
@@ -107,6 +105,7 @@ sympy==1.13.1
 termcolor==2.5.0
 threadpoolctl==3.5.0
 tifffile==2024.9.20
+tiktoken==0.8.0
 tokenizers==0.20.3
 tomli==2.1.0
 torch==2.5.1

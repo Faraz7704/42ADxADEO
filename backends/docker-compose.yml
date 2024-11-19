@@ -1,0 +1,85 @@
+services:
+  ai-db:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all # alternatively, use `count: all` for all GPUs
+              capabilities: [gpu]
+    build:
+      context: ./ai-db/  # Adjust this path to where your Dockerfile for ai-db is located
+    container_name: ai-db-c
+    environment:
+      POSTGRES_DB: ai_db
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin123
+    volumes:
+      - ai-db-data:/var/lib/postgresql/data  # Persist data
+    ports:
+      - "5432:5432"  # Expose PostgreSQL port
+
+  ai-parse:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all # alternatively, use `count: all` for all GPUs
+              capabilities: [gpu]
+    build:
+      context: ./ai-parse  # Adjust this path to where your Dockerfile for ai-parse is located
+    container_name: ai-parse-c
+    ports:
+      - "5000:5000"  # Expose Flask app port
+    environment:
+      DB_HOST: ai-db  # Use the service name as the host
+      DB_PORT: 5432
+      DB_NAME: ai_db
+      DB_USER: admin
+      DB_PASSWORD: admin123
+    depends_on:
+      - ai-db  # Ensure the database service starts before the app
+      - ai-summary
+
+  ai-summary:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all # alternatively, use `count: all` for all GPUs
+              capabilities: [gpu]
+    build:
+      context: ./ai-summary  # Adjust this path to where your Dockerfile for ai-parse is located
+    container_name: ai-summary-c
+    ports:
+      - "5002:5000"  # Expose Flask app port
+    depends_on:
+      - ai-db  # Ensure the database service starts before the app
+  
+  ai-search:
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all # alternatively, use `count: all` for all GPUs
+              capabilities: [gpu]
+    build:
+      context: ./ai-search  # Adjust this path to where your Dockerfile for ai-parse is located
+    container_name: ai-search-c
+    environment:
+      DB_HOST: ai-db  # Use the service name as the host
+      DB_PORT: 5432
+      DB_NAME: ai_db
+      DB_USER: admin
+      DB_PASSWORD: admin123
+    ports:
+      - "5003:5000"  # Expose Flask app port
+    depends_on:
+      - ai-db
+      - ai-parse  # Ensure the database service starts before the app
+
+volumes:
+  ai-db-data:  # Define a named volume for PostgreSQL data

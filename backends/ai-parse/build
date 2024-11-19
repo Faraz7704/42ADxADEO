@@ -8,5 +8,5 @@ NAME="ai-parse"
 docker build . -t ${NAME}
 
 
-echo "docker run -it --gpus all -p 8000:8000 -p 8001:8001 -p 8002:8002 -p 8003:8003 --name ${NAME}-c --rm -v "$PWD:/home/vscode/src" ${NAME} "/bin/zsh"" > start
+echo "docker run -it --gpus all -p 5000:5000 -p 8000:8000 -p 8001:8001 -p 8002:8002 -p 8003:8003 --name ${NAME}-c --rm -v "$PWD:/home/vscode/src" ${NAME} "/bin/zsh"" > start
 chmod 777 start
