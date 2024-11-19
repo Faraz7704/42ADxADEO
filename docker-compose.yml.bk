@@ -1,0 +1,93 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - grow-id
+
+  grow-id:
+    build:
+      context: ./backends/grow-id
+    container_name: grow-id
+    ports:
+      - "4001:4001"
+    env_file:
+      - ./backends/grow-id/.env
+    depends_on:
+      - grow-id-db
+
+  grow-notify:
+    build:
+      context: ./backends/grow-notify
+    container_name: grow-notify
+    env_file:
+      - ./backends/grow-notify/.env
+    depends_on:
+      - redis
+
+  grow-ask:
+    build:
+      context: ./backends/grow-ask
+    container_name: grow-ask
+    env_file:
+      - ./backends/grow-ask/.env
+    depends_on:
+      - kafka
+
+  grow-id-db:
+    image: postgres:15
+    container_name: grow-id-db
+    env_file:
+      - ./backends/grow-id/.env
+    # environment:
+    #   POSTGRES_USER: ${DB_USER}
+    #   POSTGRES_PASSWORD: ${DB_PASSWORD}
+    #   POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5433:5432"
+    volumes:
+      - grow-id-db-data:/var/lib/postgresql/data
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./frontend/nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - frontend
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
+
+  kafka:
+    image: bitnami/kafka:latest
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL: PLAINTEXT
+      KAFKA_LISTENER_NAME: PLAINTEXT
+      KAFKA_LISTENER_PORT: 9092
+      KAFKA_LISTENER_INTERFACE: 0.0.0.0
+      KAFKA_LISTENER_LOGICAL_NAME: PLAINTEXT
+      KAFKA_LISTENER_NAME_CONVERTER: org.apache.kafka.common.serialization.StringSerializer
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+
+  zookeeper:
+    image: bitnami/zookeeper:latest
+    ports:
+      - "2181:2181"
+
+volumes:
+  grow-id-db-data:

@@ -4,20 +4,21 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import typeOrmConfig from './config/typeorm.config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { User } from './users/user.entity';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
+import { RolesModule } from './roles/roles.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true, // Makes .env accessible globally
     }),
-
     TypeOrmModule.forRootAsync({
       useFactory: () => typeOrmConfig, // Use external config
     }),
-
-    // Register entity-specific modules or repositories here
-    TypeOrmModule.forFeature([User]),
+    AuthModule,
+    UsersModule,
+    RolesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
