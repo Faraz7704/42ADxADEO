@@ -1,0 +1,13 @@
+.scrollbar-container::-webkit-scrollbar {
+  width: 4px; /* Width of the scrollbar */
+}
+.scrollbar-container::-webkit-scrollbar-track {
+  background: #e8e8e8; /* Background of the scrollbar track */
+}
+.scrollbar-container::-webkit-scrollbar-thumb {
+  background: #c3bfbf; /* Color of the scrollbar thumb */
+  border-radius: 4px; /* Rounded edges */
+}
+.scrollbar-container::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Color on hover */
+}
