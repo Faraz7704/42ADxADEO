@@ -1,0 +1,4 @@
+.focus-visible\:ring-ring:focus-visible,
+.focus-visible\:ring-1:focus-visible {
+  outline: none !important;
+}
