@@ -160,12 +160,12 @@ const BlogCard: React.FC<BlogCardProps> = ({
             <h3 className="text-md font-semibold text-gray-800">
               Description:
             </h3>
-            <p className="text-sm text-gray-700">
+            <p className="text-sm text-gray-700 desc-text">
               {aiSummary && aiSummary.length > 100 ? (
                 <>
                   {isSummaryExpanded
                     ? aiSummary
-                    : `${aiSummary.substring(0, 150)}...`}
+                    : `${aiSummary.substring(0, 200)}...`}
                 </>
               ) : (
                 aiSummary || "No Description available."
@@ -241,7 +241,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
                 <h3 className="text-md font-semibold mb-1 text-gray-800">
                   Description:
                 </h3>
-                <p className="text-sm text-gray-700 flex flex-col items-start">
+                <p className="text-sm text-gray-700 flex flex-col items-start ">
                   {aiSummary && aiSummary.length > 100 ? (
                     <>
                       {isSummaryExpanded
