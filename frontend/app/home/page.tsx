@@ -8,7 +8,6 @@ import { Sparkles } from "lucide-react";
 import Image from "next/image";
 import Logo from "@/public/Logo_black.png";
 import BlogCard from "@/components/blog-card";
-import { departmentLogos } from "@/utils/departmentLogos";
 import "./page.css";
 
 type CardData = {
@@ -16,6 +15,7 @@ type CardData = {
   question: string;
   answer?: string;
   aiSummary?: string;
+  requestDescription?: string;
   departments: string[];
   logo?: StaticImageData | string;
   date: string;
@@ -23,6 +23,7 @@ type CardData = {
   upvotes: number;
   comments: number;
 };
+
 
 export default function HomePage() {
   const router = useRouter();
@@ -32,150 +33,157 @@ export default function HomePage() {
   const [filteredCards, setFilteredCards] = useState<CardData[]>([]);
 
   useEffect(() => {
-    // Mock card data
     const data: CardData[] = [
       {
         id: 1,
-        question:
-          "What are the renewable energy plans for residential buildings?",
-        departments: [
-          "Department of Energy",
-          "Department of Municipalities and Transport",
-        ],
-        logo: departmentLogos["Department of Energy"],
+        question: "What are the renewable energy plans for residential buildings?",
+        departments: ["Operations", "Research and Development"],
         date: "2024-11-15",
         status: "approved",
         upvotes: 12,
         comments: 5,
         aiSummary:
-          "The Department of Energy, in collaboration with the Department of Municipalities and Transport, has implemented several renewable energy initiatives for residential buildings, focusing on solar panel installations and energy efficiency upgrades. The Department of Energy, in collaboration with the Department of Municipalities and Transport, has implemented several renewable energy initiatives for residential buildings, focusing on solar panel installations and energy efficiency upgrades. The Department of Energy, in collaboration with the Department of Municipalities and Transport, has implemented several renewable energy initiatives for residential buildings, focusing on solar panel installations and energy efficiency upgrades. The Department of Energy, in collaboration with the Department of Municipalities and Transport, has implemented several renewable energy initiatives for residential buildings, focusing on solar panel installations and energy efficiency upgrades.",
+          "The Operations and Research and Development departments are collaborating on renewable energy plans for residential buildings. These plans prioritize solar panels and energy-efficient upgrades.",
+        requestDescription:
+          "The initiative aims to reduce energy consumption by encouraging the installation of solar panels, promoting energy-efficient appliances, and offering financial incentives such as subsidies and tax credits for residential energy upgrades.",
       },
       {
         id: 2,
-        question:
-          "What is the process to obtain a medical license as a doctor?",
-        departments: ["Department of Health"],
-        logo: departmentLogos["Department of Health"],
+        question: "What is the process to obtain a medical license as a doctor?",
+        departments: ["Human Resources"],
         date: "2024-11-14",
         status: "under discussion",
         upvotes: 8,
         comments: 3,
         aiSummary:
-          "The process to obtain a medical license involves applying through the Department of Health, completing required exams, and undergoing a background check.",
+          "The Human Resources department oversees medical licensing, involving applications, exams, and background checks.",
+        requestDescription:
+          "Applicants must submit an application, complete required medical examinations, provide verified educational credentials, and undergo a comprehensive background check. Additional steps may include professional interviews and local registration with health authorities.",
       },
       {
         id: 3,
         question: "What are the upcoming heritage festivals in Abu Dhabi?",
-        departments: ["Department of Culture and Tourism"],
-        logo: departmentLogos["Department of Culture and Tourism"],
+        departments: ["Marketing"],
         date: "2024-11-13",
         status: "approved",
         upvotes: 15,
         comments: 7,
         aiSummary:
-          "Several heritage festivals are scheduled, celebrating traditional Emirati culture, including the Date Festival and Camel Racing events.",
+          "Upcoming heritage festivals celebrate Emirati culture with traditional events, such as camel racing and the Date Festival.",
+        requestDescription:
+          "Heritage festivals in Abu Dhabi will feature traditional Emirati dances, camel racing, the Date Festival, and local artisan markets. Visitors can experience cultural exhibitions, live music performances, and food-tasting events that showcase the rich heritage of the UAE.",
       },
       {
         id: 4,
-        question:
-          "What support programs are available for families with disabled members?",
-        departments: [
-          "Department of Community Development",
-          "Department of Health",
-        ],
-        logo: departmentLogos["Department of Community Development"],
+        question: "What support programs are available for families with disabled members?",
+        departments: ["Customer Service", "Human Resources"],
         date: "2024-11-12",
         status: "not answered",
         upvotes: 3,
         comments: 1,
+        aiSummary:
+          "Support programs for families with disabled members focus on accessibility, financial aid, and caregiver resources.",
+        requestDescription:
+          "Available programs include financial assistance for medical treatments, caregiver support initiatives, access to specialized education, and therapy services. There are also community programs designed to enhance social inclusion and promote accessibility in public spaces.",
       },
       {
         id: 5,
         question: "How can I report fire hazards in my apartment building?",
-        departments: ["Abu Dhabi Civil Defence Authority"],
-        logo: departmentLogos["Abu Dhabi Civil Defence Authority"],
+        departments: ["Operations"],
         date: "2024-11-11",
         status: "approved",
         upvotes: 20,
         comments: 10,
         aiSummary:
-          "Fire hazards can be reported to the Abu Dhabi Civil Defence Authority via their hotline or through their online portal.",
+          "Fire hazards can be reported via a hotline or online system managed by the Operations department.",
+        requestDescription:
+          "Residents are encouraged to report fire hazards using the designated hotline or online portal. Reporting ensures prompt action, including inspections and safety audits, which aim to mitigate risks and maintain fire safety standards in residential buildings.",
       },
       {
         id: 6,
-        question:
-          "What legal documents are needed to start a business in Abu Dhabi?",
-        departments: [
-          "Abu Dhabi Judicial Department",
-          "Department of Economic Development",
-        ],
-        logo: departmentLogos["Abu Dhabi Judicial Department"],
+        question: "What legal documents are needed to start a business in Abu Dhabi?",
+        departments: ["Legal", "Product Management"],
         date: "2024-11-10",
         status: "under discussion",
         upvotes: 5,
         comments: 2,
         aiSummary:
-          "Starting a business requires obtaining a trade license, registering with the Department of Economic Development, and submitting proof of identity and business plans.",
+          "Starting a business requires trade licenses, business plans, and proof of identity.",
+        requestDescription:
+          "Essential documents for starting a business include a trade license, a detailed business plan, personal identification, and proof of financial stability. Applicants may also need tenancy agreements and approvals from relevant authorities based on the business type.",
       },
       {
         id: 7,
         question: "What are the steps to register a new commercial license?",
-        departments: ["Department of Economic Development"],
-        logo: departmentLogos["Department of Economic Development"],
+        departments: ["Legal"],
         date: "2024-11-09",
         status: "approved",
         upvotes: 18,
         comments: 6,
         aiSummary:
-          "To register a new commercial license, applicants must submit their business plan, identification, and complete registration with the Department of Economic Development.",
+          "The Legal department manages commercial license registration, including submitting required documents.",
+        requestDescription:
+          "To register a commercial license, applicants must complete an online application, submit identification documents, provide a business plan, and pay the necessary fees. Approvals from the respective regulatory bodies are mandatory to finalize the process.",
       },
       {
         id: 8,
-        question:
-          "Which transportation services are available to connect Abu Dhabi suburbs?",
-        departments: ["Department of Municipalities and Transport"],
-        logo: departmentLogos["Department of Municipalities and Transport"],
+        question: "Which transportation services are available to connect Abu Dhabi suburbs?",
+        departments: ["Operations"],
         date: "2024-11-08",
         status: "approved",
         upvotes: 14,
         comments: 8,
         aiSummary:
-          "The Department of Municipalities and Transport provides bus and taxi services that connect Abu Dhabi suburbs, with plans for future metro expansion.",
+          "Transportation services include buses and taxis, with future metro expansion planned.",
+        requestDescription:
+          "Currently, Abu Dhabi offers reliable bus and taxi services connecting suburban areas. Future plans include a metro system to enhance connectivity and reduce commute times, making suburban travel more efficient and sustainable.",
       },
       {
         id: 9,
-        question:
-          "Are there any grants for schools to implement AI in education?",
-        departments: [
-          "Department of Education and Knowledge",
-          "Department of Economic Development",
-        ],
-        logo: departmentLogos["Department of Education and Knowledge"],
+        question: "Are there any grants for schools to implement AI in education?",
+        departments: ["Research and Development", "Finance"],
         date: "2024-11-07",
         status: "not answered",
         upvotes: 10,
         comments: 4,
+        aiSummary:
+          "Grants for AI in education focus on curriculum development and teacher training.",
+        requestDescription:
+          "Grant programs aim to support schools in integrating AI into their curriculum. These grants provide funding for teacher training, development of AI-based learning modules, and the acquisition of smart classroom technologies to enhance student learning experiences.",
       },
       {
         id: 10,
-        question:
-          "What green initiatives are being implemented in government offices?",
-        departments: [
-          "Department of Government Enablement",
-          "Department of Energy",
-        ],
-        logo: departmentLogos["Department of Government Enablement"],
+        question: "What green initiatives are being implemented in government offices?",
+        departments: ["Operations", "Research and Development"],
         date: "2024-11-06",
         status: "under discussion",
         upvotes: 7,
         comments: 3,
         aiSummary:
-          "Government offices are implementing green initiatives like reducing paper usage, increasing energy efficiency, and installing solar panels.",
+          "Green initiatives include solar panels, paperless workflows, and energy-efficient upgrades.",
+        requestDescription:
+          "Government offices are actively implementing sustainability measures, such as installing solar panels, adopting paperless operations, and retrofitting buildings with energy-efficient equipment. These efforts aim to reduce carbon emissions and promote environmental responsibility across departments.",
       },
     ];
+    
+    
+    
     setCards(data);
     setFilteredCards(data);
   }, []);
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "approved":
+        return "bg-green-500";
+      case "under discussion":
+        return "bg-yellow-500";
+      case "not answered":
+        return "bg-red-500";
+      default:
+        return "bg-gray-300";
+    }
+  };
 
   const handleSearch = () => {
     if (searchQuery) {

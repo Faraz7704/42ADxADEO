@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { StaticImageData } from "next/image";
 import Image from "next/image";
-import { XIcon, Calendar } from "lucide-react";
+import { XIcon, Calendar, PenIcon } from "lucide-react";
 import avatar from "@/public/avatar.jpeg";
 import placeholder from "@/public/avatar_placeholder.png";
 import "./style.css";
@@ -33,21 +33,26 @@ export type BlogCardProps = {
   question: string;
   answer?: string;
   aiSummary?: string;
+  requestDescription?: string;
   departments: string[];
   logo?: string | StaticImageData;
   date: string;
   status: "not answered" | "approved" | "under discussion";
+  statusColor: string;
   upvotes: number;
   comments: number;
 };
 
+
 const BlogCard: React.FC<BlogCardProps> = ({
   question,
   aiSummary,
+  requestDescription,
   departments = [],
   logo,
   date,
   status,
+  statusColor,
   upvotes,
   comments,
 }) => {
@@ -55,7 +60,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
   const [isExpanded, setIsExpanded] = useState(false);
   const [isSummaryExpanded, setIsSummaryExpanded] = useState(false);
   const [personalExpertise, setPersonalExpertise] = useState("");
-  const [history, setHistory] = useState("");
   const [files, setFiles] = useState<File[]>([]);
   const [commentsList, setCommentsList] = useState<
     {
@@ -63,7 +67,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
       name: string;
       date: string;
       expertise: string;
-      history: string;
+      department: string;
     }[]
   >([
     {
@@ -72,7 +76,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
       date: new Date().toISOString().split("T")[0],
       expertise:
         "I believe AI will bring a lot of positive changes to education.",
-      history: "10 years of experience in the education sector.",
+      department: "Finance",
     },
   ]);
 
@@ -81,6 +85,18 @@ const BlogCard: React.FC<BlogCardProps> = ({
     if (status === "under discussion") return "bg-yellow-500";
     if (status === "not answered") return "bg-red-500";
     return "bg-gray-300";
+  };
+  const getStatusTextColor = (status: string) => {
+    switch (status) {
+      case "approved":
+        return "text-green-500";
+      case "under discussion":
+        return "text-yellow-500";
+      case "not answered":
+        return "text-red-500";
+      default:
+        return "text-gray-300";
+    }
   };
 
   const handleCardClick = () => {
@@ -107,12 +123,11 @@ const BlogCard: React.FC<BlogCardProps> = ({
       name: "Abdullah Almansouri",
       date: new Date().toISOString().split("T")[0],
       expertise: personalExpertise,
-      history,
+      department: departments[0],
     };
 
     setCommentsList((prev) => [...prev, newComment]);
     setPersonalExpertise("");
-    setHistory("");
     setFiles([]);
     setIsExpanded(false);
   };
@@ -153,21 +168,28 @@ const BlogCard: React.FC<BlogCardProps> = ({
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="flex-grow flex  justify-center">
-          <div className=" p-4 border border-gray-300 rounded-md w-full bg-white">
-            <h3 className="text-md font-semibold text-gray-800">
-              Description:
-            </h3>
+        <CardContent className="flex-grow flex justify-center">
+          <div className="p-4 border border-gray-300 rounded-md w-full bg-white">
+            <h3 className="text-md font-semibold text-gray-800">Description:</h3>
             <p className="text-sm text-gray-700 desc-text">
-              {aiSummary && aiSummary.length > 100 ? (
-                <>
-                  {isSummaryExpanded
-                    ? aiSummary
-                    : `${aiSummary.substring(0, 200)}...`}
-                </>
-              ) : (
-                aiSummary || "No Description available."
-              )}
+            {requestDescription && requestDescription.length > 100 ? (
+                  <>
+                    {isSummaryExpanded
+                      ? requestDescription
+                      : `${requestDescription.substring(0, 250)}`}
+                    {requestDescription.length > 250 && (
+                      <Button
+                        onClick={handleSummaryExpandClick}
+                        variant="outline"
+                        className="my-2 text-xs p-3"
+                      >
+                        {isSummaryExpanded ? "Show less" : "Show more"}
+                      </Button>
+                    )}
+                  </>
+                ) : (
+                  requestDescription || "No Description available."
+                )}
             </p>
           </div>
         </CardContent>
@@ -231,8 +253,8 @@ const BlogCard: React.FC<BlogCardProps> = ({
               </p>
             </div>
 
-            <div className="text-xs sm:text-sm text-green-500 font-bold">
-              Status: <span className="font-medium uppercase">{status}</span>
+            <div className="text-xs sm:text-sm font-bold">
+              Status: <span className={`font-medium uppercase ${getStatusTextColor(status)}`}>{status}</span>
             </div>
 
             <div className=" p-4 border border-gray-300 rounded-md w-full bg-white">
@@ -240,12 +262,12 @@ const BlogCard: React.FC<BlogCardProps> = ({
                 Description:
               </h3>
               <p className="text-sm text-gray-700 flex flex-col items-start ">
-                {aiSummary && aiSummary.length > 100 ? (
+                {requestDescription && requestDescription.length > 100 ? (
                   <>
                     {isSummaryExpanded
-                      ? aiSummary
-                      : `${aiSummary.substring(0, 250)}`}
-                    {aiSummary.length > 250 && (
+                      ? requestDescription
+                      : `${requestDescription.substring(0, 250)}`}
+                    {requestDescription.length > 250 && (
                       <Button
                         onClick={handleSummaryExpandClick}
                         variant="outline"
@@ -256,7 +278,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
                     )}
                   </>
                 ) : (
-                  aiSummary || "No Description available."
+                  requestDescription || "No Description available."
                 )}
               </p>
             </div>
@@ -366,13 +388,7 @@ const BlogCard: React.FC<BlogCardProps> = ({
                 className="flex items-center w-full justify-between p-4"
               >
                 <div className="flex items-center space-x-3">
-                  <Image
-                    src={logo || `${placeholder.src}?height=40&width=40`}
-                    alt="User Avatar"
-                    width={40}
-                    height={40}
-                    className="rounded-full"
-                  />
+                  <PenIcon/>
                   <span className="text-gray-500">Share your thoughts</span>
                 </div>
               </Button>
@@ -389,16 +405,6 @@ const BlogCard: React.FC<BlogCardProps> = ({
                     value={personalExpertise}
                     onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
                       setPersonalExpertise(e.target.value)
-                    }
-                  />
-                </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="history">History</Label>
-                  <Textarea
-                    id="history"
-                    value={history}
-                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-                      setHistory(e.target.value)
                     }
                   />
                 </div>
@@ -446,12 +452,12 @@ const BlogCard: React.FC<BlogCardProps> = ({
                         {comment.date}
                       </span>
                     </div>
-                    <p className="text-sm mt-2">
+                    <p className="text-sm mt-1">
                       <strong>Expertise Opinion:</strong> {comment.expertise}
                     </p>
                     <p className="text-sm mt-1">
-                      <strong>History:</strong> {comment.history}
-                    </p>
+          <strong>Department:</strong> {comment.department}
+        </p>
                   </div>
                 </div>
               ))}
