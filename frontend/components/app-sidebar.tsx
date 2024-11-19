@@ -73,8 +73,8 @@ const data = {
       icon: Lightbulb,
     },
     {
-      title: "History",
-      url: "/home/history",
+      title: "Upload Files",
+      url: "/home/upload",
       icon: FileClock,
     },
     {

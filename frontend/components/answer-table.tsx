@@ -127,7 +127,7 @@ export default function AnswerTable() {
             <TableHead className="w-[50px]">Select</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Name</TableHead>
-            <TableHead>Summarized Question</TableHead>
+            <TableHead>Request title</TableHead>
             <TableHead>Date</TableHead>
           </TableRow>
         </TableHeader>

@@ -104,15 +104,13 @@ const BlogCard: React.FC<BlogCardProps> = ({
   const handleSubmitComment = () => {
     const newComment = {
       avatar: typeof logo === "string" ? logo : avatar.src,
-      name: "Abdullah Almansouri", // You may replace this with the logged-in user's name.
+      name: "Abdullah Almansouri",
       date: new Date().toISOString().split("T")[0],
       expertise: personalExpertise,
       history,
     };
 
     setCommentsList((prev) => [...prev, newComment]);
-
-    // Clear the form after submission
     setPersonalExpertise("");
     setHistory("");
     setFiles([]);
@@ -227,14 +225,14 @@ const BlogCard: React.FC<BlogCardProps> = ({
               </div>
 
               <div className="flex align-middle">
-                <Calendar className="w-5 h-5 me-1 text-blue-500" />
-                <p className="text-xs sm:text-sm text-blue-500 m-0 font-bold leading-0">
+                <Calendar className="w-5 h-5 me-1 text-gray-800" />
+                <p className="text-xs sm:text-sm text-gray-800 m-0 font-bold leading-0">
                   {date}
                 </p>
               </div>
 
-              <div className="text-xs sm:text-sm text-green-500 font-bold">
-                Status: <span className="font-medium uppercase">{status}</span>
+              <div className="text-xs sm:text-sm font-bold">
+                Status: <span className="font-medium text-green-500 ">{status}</span>
               </div>
 
               <div className=" p-4 border border-gray-300 rounded-md w-full bg-white">
@@ -266,22 +264,11 @@ const BlogCard: React.FC<BlogCardProps> = ({
                   Attached Documents:
                 </h4>
                 <div className="flex flex-wrap gap-2 justify-between">
-                  {files.length > 0 ? (
-                    files.map((file, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 text-xs font-medium bg-white rounded-full shadow-sm"
-                      >
-                        {file.name}
-                      </span>
-                    ))
-                  ) : (
                     <>
                       <Button variant="outline">Example_File_1.pdf</Button>
                       <Button variant="outline">Example_File_2.docx</Button>
                       <Button variant="outline">Example_Image.png</Button>
                     </>
-                  )}
                 </div>
               </div>
 
@@ -337,22 +324,11 @@ const BlogCard: React.FC<BlogCardProps> = ({
                   Relevant Documents:
                 </h4>
                 <div className="flex flex-wrap gap-2 justify-between">
-                  {files.length > 0 ? (
-                    files.map((file, idx) => (
-                      <span
-                        key={idx}
-                        className="px-3 py-1 text-xs font-medium bg-white rounded-full shadow-sm"
-                      >
-                        {file.name}
-                      </span>
-                    ))
-                  ) : (
                     <>
                       <Button variant="outline">Example_File_1.pdf</Button>
                       <Button variant="outline">Example_File_2.docx</Button>
                       <Button variant="outline">Example_Image.png</Button>
                     </>
-                  )}
                 </div>
               </div>
             </div>
