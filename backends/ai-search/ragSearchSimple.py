@@ -1,64 +1,69 @@
 import ollama
 
 
-import psycopg2
-import os
+# import psycopg2
+# import os
 
-# Database connection parameters
-DB_HOST = os.getenv('DB_HOST', 'ai-db')
-DB_NAME = os.getenv('DB_NAME', 'ai_db')
-DB_USER = os.getenv('DB_USER', 'admin')
-DB_PASSWORD = os.getenv('DB_PASSWORD', 'admin123')
-DB_PORT = os.getenv('DB_PORT', 5432)
+# # Database connection parameters
+# DB_HOST = os.getenv('DB_HOST', 'ai-db')
+# DB_NAME = os.getenv('DB_NAME', 'ai_db')
+# DB_USER = os.getenv('DB_USER', 'admin')
+# DB_PASSWORD = os.getenv('DB_PASSWORD', 'admin123')
+# DB_PORT = os.getenv('DB_PORT', 5432)
 
-def get_db_connection():
-    """Create a new database connection."""
-    conn = psycopg2.connect(
-        host=DB_HOST,
-        port=DB_PORT,
-        dbname=DB_NAME,
-        user=DB_USER,
-        password=DB_PASSWORD
-    )
-    return conn
+# def get_db_connection():
+#     """Create a new database connection."""
+#     conn = psycopg2.connect(
+#         host=DB_HOST,
+#         port=DB_PORT,
+#         dbname=DB_NAME,
+#         user=DB_USER,
+#         password=DB_PASSWORD
+#     )
+#     return conn
 
-def load_ocr_text_and_titles_from_db():
-    dataset = []
-    try:
-        conn = get_db_connection()
-        cursor = conn.cursor()
+# def load_ocr_text_and_titles_from_db():
+#     dataset = []
+#     try:
+#         conn = get_db_connection()
+#         cursor = conn.cursor()
         
-        # Execute a SQL query to fetch ocr_text, document_id, and document title
-        cursor.execute("""
-            SELECT p.document_id, d.filename, p.ocr_text 
-            FROM pages p
-            JOIN documents d ON p.document_id = d.id
-        """)
+#         # Execute a SQL query to fetch ocr_text, document_id, and document title
+#         cursor.execute("""
+#             SELECT p.document_id, d.filename, p.ocr_text 
+#             FROM pages p
+#             JOIN documents d ON p.document_id = d.id
+#         """)
         
-        # Fetch all rows from the executed query
-        rows = cursor.fetchall()
+#         # Fetch all rows from the executed query
+#         rows = cursor.fetchall()
         
-        # Process each row and append to the dataset
-        for row in rows:
-            dataset.append({
-                'document_id': row[0],
-                'filename': row[1],
-                'ocr_text': row[2]
-            })
+#         # Process each row and append to the dataset
+#         for row in rows:
+#             dataset.append({
+#                 'document_id': row[0],
+#                 'filename': row[1],
+#                 'ocr_text': row[2]
+#             })
         
-        print(f'Loaded {len(dataset)} entries')
+#         print(f'Loaded {len(dataset)} entries')
         
-    except Exception as e:
-        print(f'An error occurred: {e}')
-    finally:
-        cursor.close()
-        conn.close()
+#     except Exception as e:
+#         print(f'An error occurred: {e}')
+#     finally:
+#         cursor.close()
+#         conn.close()
         
-    return dataset
+#     return dataset
 
-# Load OCR text, document IDs, and titles from the database into the dataset variable
-dataset = load_ocr_text_and_titles_from_db()
+# # Load OCR text, document IDs, and titles from the database into the dataset variable
+# dataset = load_ocr_text_and_titles_from_db()
 
+
+dataset = []
+with open('cat-facts.txt', 'r') as file:
+  dataset = file.readlines()
+  print(f'Loaded {len(dataset)} entries')
 
 # Implement the retrieval system
 
