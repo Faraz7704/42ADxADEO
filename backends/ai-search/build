@@ -3,7 +3,7 @@
 #repo path
 # repoPath=$(find $HOME -type d -name baseOS 2>/dev/null)
 
-NAME="ai-summary"
+NAME="ai-search"
 
 docker build . -t ${NAME}
 

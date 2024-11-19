@@ -209,7 +209,10 @@ COPY huggingfaceAuth.sh /tmp
 
 RUN sh /tmp/huggingfaceAuth.sh
 
+COPY . /home/vscode/src
 
+# CMD ["tail", "-f"]
+CMD ["python", "documentParse_flask.py"]
 
 # Install oh-my-zsh and update user prompt
 RUN sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" && echo 'PROMPT=%B%F{blue}[DOCKER]%f%b$PROMPT' >> /root/.zshrc
@@ -223,3 +226,4 @@ ENV PROMPT_COMMAND='RET=$?; echo -n "[$RET] "'
 LABEL maintainer="Jinxiu Yao <jya0>" \
       version="1.0.0"
 
+EXPOSE 5000

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAG Web Interface</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Ask a Question</h1>
+        <form method="POST" class="mt-3">
+            <div class="form-group">
+                <label for="query">Your Question:</label>
+                <input type="text" class="form-control" id="query" name="query" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+        {% if response %}
+        <h2 class="mt-5">Response:</h2>
+        <p>{{ response }}</p>
+        <h3>Relevant Document Titles:</h3>
+        <ul>
+            {% for title in titles %}
+            <li>{{ title }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</body>
+</html>
