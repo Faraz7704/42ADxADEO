@@ -118,7 +118,7 @@ export default function QuestionForm() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="my-5">Open Question Form</Button>
+        <Button className="my-5">New Request</Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>

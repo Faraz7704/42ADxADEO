@@ -6,15 +6,24 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { Separator } from "@/components/ui/separator";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Bell } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
+import Image from "next/image";
+import uaeFlag from "@/public/uae-flag.png";
+import ukFlag from "@/public/uk-flag.svg";
 
 function formatPageTitle(pathname: string) {
   const segments = pathname.split("/").filter(Boolean);
   if (segments.length > 1) {
     return segments[segments.length - 1]
       .replace(/-/g, " ")
-      .replace(/^\w/, (c) => c.toUpperCase());
+      .replace(/^[a-zA-Z]/, (c) => c.toUpperCase());
   }
   return "Home";
 }
@@ -22,6 +31,7 @@ function formatPageTitle(pathname: string) {
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
+  const [language, setLanguage] = useState("English");
   const notificationRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -34,6 +44,10 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
   const handleNotificationClick = () => {
     setIsNotificationOpen((prev) => !prev);
+  };
+
+  const handleLanguageChange = () => {
+    setLanguage((prevLanguage) => (prevLanguage === "English" ? "العربية" : "English"));
   };
 
   useEffect(() => {
@@ -65,8 +79,42 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 
             <h1 className="text-lg font-semibold">{formatPageTitle(pathname)}</h1>
 
-            <div className="ml-auto flex items-center gap-4 relative">
-              <Input type="text" placeholder="Search..." className="max-w-xs" />
+            <div className="ml-auto flex items-center gap-2 relative">
+              {pathname !== "/home" && (
+                <div className="relative max-w-md w-full">
+                  <Input type="text" placeholder="Search..." className="pl-10 w-full" />
+                  <Search className="absolute top-1/2 left-3 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+                </div>
+              )}
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" className="flex items-center gap-2 min-w-[50px] md:min-w-[20px]">
+                    <Image
+                      src={language === "English" ? ukFlag : uaeFlag}
+                      alt={language === "English" ? "UK Flag" : "UAE Flag"}
+                      width={15}
+                      height={15}
+                    />
+                    <span className="hidden md:inline">{language}</span>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={handleLanguageChange}>
+                    {language === "English" ? (
+                      <div className="flex items-center gap-2">
+                        <Image src={uaeFlag} alt="UAE Flag" width={15} height={15} />
+                        <span>العربية</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2">
+                        <Image src={ukFlag} alt="UK Flag" width={15} height={15} />
+                        <span>English</span>
+                      </div>
+                    )}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
 
               <Button
                 ref={buttonRef}
